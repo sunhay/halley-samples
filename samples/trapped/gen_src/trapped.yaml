@@ -1,0 +1,87 @@
+---
+
+component: Position
+members:
+  - position: 'Halley::Vector2f'
+
+---
+
+component: Velocity
+members:
+  - velocity: 'Halley::Vector2f'
+
+---
+
+component: Sprite
+members:
+  - sprite: 'Halley::Sprite'
+  - layer: int
+
+---
+
+component: SpriteAnimation
+members:
+  - player: 'Halley::AnimationPlayer'
+
+---
+
+component: PlayerInput
+members:
+  - input: 'std::shared_ptr<Halley::InputVirtual>'
+
+---
+
+component: Mob
+members:
+  - moveDir: Halley::Vector2f
+  - faceDir: Halley::Vector2f
+  - maxSpeed: float
+
+
+
+---
+
+
+
+system: PlayerInput
+families:
+  - main:
+    - Mob: write
+    - PlayerInput: read
+
+---
+
+system: Mob
+families:
+  - main:
+    - Mob: read
+    - Velocity: write
+
+---
+
+system: Movement
+families:
+  - main:
+    - Position: write
+    - Velocity: read
+
+---
+
+system: SpriteAnimation
+families:
+  - main:
+    - Sprite: write
+    - SpriteAnimation: write
+    - Mob: read
+
+---
+
+system: SpriteRender
+families:
+  - main:
+    - Position: read
+    - Sprite: write
+method: render
+strategy: global
+
+...
