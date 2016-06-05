@@ -55,6 +55,6 @@ void GameStage::createPlayer() {
 		.addComponent(new VelocityComponent(Vector2f(0, 0)))
 		.addComponent(new SpriteAnimationComponent(AnimationPlayer(getResource<Animation>("ella.yaml"))))
 		.addComponent(new SpriteComponent())
-		.addComponent(new MobComponent(Vector2f(), Vector2f(), 400))
+		.addComponent(new MobComponent(Vector2f(), Vector2f(), 50, 300))
 		.addComponent(new PlayerInputComponent(input));
 }

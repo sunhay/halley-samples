@@ -35,6 +35,7 @@ component: Mob
 members:
   - moveDir: Halley::Vector2f
   - faceDir: Halley::Vector2f
+  - accel: float
   - maxSpeed: float
 
 
