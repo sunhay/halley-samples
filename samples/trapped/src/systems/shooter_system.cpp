@@ -25,15 +25,23 @@ public:
 private:
 	void spawnBullet(const String& type, Vector2f pos, Vector2f dir, Vector2f playerVel)
 	{
-		Vector2f origin = pos + Vector2f(0, -10);
 		Vector2f vel = dir * 500 + playerVel * 0.5f;
+		Vector2f origin = pos + Vector2f(0, 15) + vel * 0.016f;
 		float ttl = 0.4f;
 		float damage = 1;
+
+		auto& sheet = *getAPI().getResource<SpriteSheet>("trapped_sprites.json");
+		auto material = getAPI().getResource<MaterialDefinition>("sprite.yaml");
 
 		getWorld().createEntity()
 			.addComponent(new PositionComponent(origin))
 			.addComponent(new VelocityComponent(vel))
-			.addComponent(new SpriteComponent(Sprite().setImage(getAPI().core->getResources(), "FX/simple_bullet.png").setColour(Colour(1, 1, 0)).setPivot(Vector2f(0.5f, 0.5f)), 0))
+			.addComponent(new SpriteComponent(Sprite()
+				.setImage(sheet.getTexture(), material)
+				.setSprite(sheet, "simple_bullet.png")
+				.setColour(Colour(1, 1, 0))
+				.setPivot(Vector2f(0.5f, 0.5f))
+				.setRotation(vel.angle()), 0))
 			.addComponent(new BulletComponent(damage))
 			.addComponent(new TTLComponent(ttl));
 	}
