@@ -3,7 +3,7 @@
 #include <components/velocity_component.h>
 #include <components/sprite_component.h>
 #include <components/bullet_component.h>
-#include <components/t_t_l_component.h>
+#include <components/ttl_component.h>
 
 using namespace Halley;
 

@@ -75,6 +75,13 @@ members:
 
 ---
 
+component: Health
+members:
+  - max: int
+  - current: int
+
+---
+
 
 
 system: PlayerInput
@@ -130,6 +137,13 @@ families:
   - main:
     - TTL: write
 access: ['world']
+
+---
+
+system: Damage
+families:
+  - main:
+    - Health: write
 
 ---
 

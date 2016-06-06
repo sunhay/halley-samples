@@ -1,4 +1,4 @@
-#include <systems/t_t_l_system.h>
+#include <systems/ttl_system.h>
 
 class TTLSystem final : public TTLSystemBase<TTLSystem> {
 public:

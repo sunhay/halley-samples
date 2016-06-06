@@ -3,27 +3,20 @@ cmake_minimum_required (VERSION 3.0)
 project (trapped)
 
 set (trapped_sources
-		"prec.cpp"
+	"prec.cpp"
 
-		"src/game/game_stage.cpp"
-		"src/game/trapped_game.cpp"
-
-		"src/systems/mob_system.cpp"
-		"src/systems/movement_system.cpp"
-		"src/systems/player_input_system.cpp"
-		"src/systems/player_seeking_system.cpp"
-		"src/systems/shooter_system.cpp"
-		"src/systems/sprite_animation_system.cpp"
-		"src/systems/sprite_render_system.cpp"
-		"src/systems/ttl_system.cpp"
-		)
+	"src/game/game_stage.cpp"
+	"src/game/trapped_game.cpp"
+	)
 
 set (trapped_headers
-		"prec.h"
+	"prec.h"
+	
+	"src/game/game_stage.h"
+	)
 		
-		"gen_src/trapped.yaml"
-		
-		"src/game/game_stage.h"
-		)
+set (trapped_gen_definitions
+	"gen_src/trapped.yaml"
+	)
 
-halleyProject(trapped "${trapped_sources}" "${trapped_headers}" ${CMAKE_CURRENT_SOURCE_DIR}/bin)
+halleyProject(trapped "${trapped_sources}" "${trapped_headers}" "${trapped_gen_definitions}" ${CMAKE_CURRENT_SOURCE_DIR}/bin)
