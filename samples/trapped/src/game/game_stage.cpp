@@ -6,6 +6,10 @@
 #include <components/sprite_animation_component.h>
 #include <components/mob_component.h>
 #include <components/player_input_component.h>
+#include <components/enemy_component.h>
+#include <components/player_component.h>
+#include <components/shooter_component.h>
+#include <components/gun_component.h>
 
 using namespace Halley;
 
@@ -14,7 +18,9 @@ void GameStage::init()
 	world = createWorld("trapped_game_world.yaml", createSystem);
 	statsView = std::make_unique<WorldStatsView>(*getAPI().core, *world);
 
-	createPlayer();
+	createPlayer(Vector2f(640, 360));
+	createEnemy(Vector2f(240, 360));
+	createEnemy(Vector2f(640, 60));
 }
 
 void GameStage::deInit()
@@ -40,7 +46,7 @@ void GameStage::onRender(RenderContext& context) const
 	}
 }
 
-void GameStage::createPlayer() {
+void GameStage::createPlayer(Vector2f pos) {
 	auto& inputApi = getAPI().input;
 	auto keyboard = inputApi->getKeyboard(0);
 
@@ -51,10 +57,24 @@ void GameStage::createPlayer() {
 	input->bindAxisButton(3, keyboard, Keys::Up, Keys::Down);
 
 	world->createEntity()
-		.addComponent(new PositionComponent(Vector2f(640, 360)))
+		.addComponent(new PositionComponent(pos))
+		.addComponent(new VelocityComponent(Vector2f(0, 0)))
+		.addComponent(new SpriteAnimationComponent(AnimationPlayer(getResource<Animation>("ella.yaml"))))
+		.addComponent(new SpriteComponent(Sprite(), 0))
+		.addComponent(new MobComponent(Vector2f(), Vector2f(), 50, 300))
+		.addComponent(new PlayerInputComponent(input))
+		.addComponent(new PlayerComponent())
+		.addComponent(new ShooterComponent(false, Vector2f(), 0))
+		.addComponent(new GunComponent(0.1f, "machinegun"));
+}
+
+void GameStage::createEnemy(Halley::Vector2f pos)
+{
+	world->createEntity()
+		.addComponent(new PositionComponent(pos))
 		.addComponent(new VelocityComponent(Vector2f(0, 0)))
 		.addComponent(new SpriteAnimationComponent(AnimationPlayer(getResource<Animation>("ella.yaml"))))
 		.addComponent(new SpriteComponent())
-		.addComponent(new MobComponent(Vector2f(), Vector2f(), 50, 300))
-		.addComponent(new PlayerInputComponent(input));
+		.addComponent(new MobComponent(Vector2f(), Vector2f(), 30, 60))
+		.addComponent(new EnemyComponent());
 }

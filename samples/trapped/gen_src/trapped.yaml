@@ -38,7 +38,40 @@ members:
   - accel: float
   - maxSpeed: float
 
+---
 
+component: Enemy
+
+---
+
+component: Player
+
+---
+
+component: Bullet
+members:
+  - damage: float
+
+---
+
+component: TTL
+members:
+  - timeLeft: float
+
+---
+
+component: Shooter
+members:
+  - shooting: bool
+  - shootDir: 'Halley::Vector2f'
+  - cooldown: float
+
+---
+
+component: Gun
+members:
+  - cooldown: float
+  - type: 'Halley::String'
 
 ---
 
@@ -48,6 +81,7 @@ system: PlayerInput
 families:
   - main:
     - Mob: write
+    - Shooter: write
     - PlayerInput: read
 
 ---
@@ -65,6 +99,37 @@ families:
   - main:
     - Position: write
     - Velocity: read
+
+---
+
+system: PlayerSeeking
+families:
+  - main:
+    - Position: read
+    - Mob: write
+    - Enemy: read
+  - players:
+    - Position: read
+    - Player: read
+
+---
+
+system: Shooter
+families:
+  - main:
+    - Shooter: write
+    - Position: read
+    - Velocity: read
+    - Gun: read
+access: ['world', 'api']
+
+---
+
+system: TTL
+families:
+  - main:
+    - TTL: write
+access: ['world']
 
 ---
 

@@ -16,6 +16,9 @@ public:
 		if (faceDir.squaredLength() > 0.1f) {
 			entity.mob->faceDir = faceDir.unit();
 		}
+
+		entity.shooter->shooting = shooting;
+		entity.shooter->shootDir = faceDir.unit();
 	}
 };
 

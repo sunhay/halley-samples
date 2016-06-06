@@ -11,8 +11,11 @@ set (trapped_sources
 		"src/systems/mob_system.cpp"
 		"src/systems/movement_system.cpp"
 		"src/systems/player_input_system.cpp"
+		"src/systems/player_seeking_system.cpp"
+		"src/systems/shooter_system.cpp"
 		"src/systems/sprite_animation_system.cpp"
 		"src/systems/sprite_render_system.cpp"
+		"src/systems/ttl_system.cpp"
 		)
 
 set (trapped_headers
