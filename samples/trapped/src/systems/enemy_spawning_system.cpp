@@ -14,10 +14,21 @@ using namespace Halley;
 
 class EnemySpawningSystem final : public EnemySpawningSystemBase<EnemySpawningSystem> {
 public:
-	void update(Time) {
-		if (mainFamily.count() < 10) {
-			auto& r = Random::getGlobal();
-			createEnemy(Vector2f(r.getFloat(0.0f, 1280.0f), r.getFloat(0.0f, 720.0f)));
+	void update(Time time) {
+		for (auto& e : mainFamily) {
+			e.enemySpawner->cooldown = std::max(0.0f, e.enemySpawner->cooldown - float(time));
+		}
+
+		if (enemiesFamily.count() < 10) {
+			auto& rng = Random::getGlobal();
+
+			auto eligible = filterRef(mainFamily.begin(), mainFamily.end(), [](MainFamily e) -> bool { return e.enemySpawner->roomId == 0 && e.enemySpawner->cooldown == 0; });
+			if (eligible.size() > 0) {
+				auto choice = pickRandom(eligible.begin(), eligible.end(), rng).get();
+
+				createEnemy(choice.position->position);
+				choice.enemySpawner->cooldown = rng.getFloat(2.0f, 5.0f);
+			}
 		}
 	}
 

@@ -98,6 +98,13 @@ members:
 
 ---
 
+component: EnemySpawner
+members:
+  - cooldown: float
+  - roomId: int
+
+---
+
 
 
 system: PlayerInput
@@ -229,6 +236,9 @@ messages:
 system: EnemySpawning
 families:
   - main:
+    - Position: read
+    - EnemySpawner: write
+  - enemies:
     - Enemy: read
 access: ['world', 'api']
 strategy: 'global'

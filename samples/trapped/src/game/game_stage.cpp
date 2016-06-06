@@ -11,6 +11,7 @@
 #include <components/gun_component.h>
 #include <components/collider_component.h>
 #include <components/repulse_field_component.h>
+#include <components/enemy_spawner_component.h>
 
 using namespace Halley;
 
@@ -82,16 +83,26 @@ void GameStage::createObstacle(Rect4f rect)
 
 void GameStage::createRoom(Vector2f pos, int id)
 {
-	auto& sheet = *getAPI().getResource<SpriteSheet>("trapped_scenery.json");
-	auto material = getAPI().getResource<MaterialDefinition>("sprite.yaml");
-
 	world->createEntity()
 		.addComponent(PositionComponent(pos + Vector2f(350.0f, 350.0f)))
 		.addComponent(SpriteComponent(Sprite()
-			.setImage(sheet.getTexture(), material)
-			.setSprite(sheet, "BG_0" + String::integerToString(id + 1) + ".png")
+			.setSprite(getResources(), "trapped_scenery.json", "BG_0" + String::integerToString(id + 1) + ".png")
 			.setPivot(Vector2f(0.5f, 0.5f))
 		, -20));
+
+	auto& rng = Random::getGlobal();
+
+	// Enemy spawners
+	float x0 = 125;
+	float x1 = 565;
+	float y0 = 220;
+	float y1 = 605;
+	Vector2f spawners[] = { Vector2f(x1, y1), Vector2f(x0, y1), Vector2f(x1, y0), Vector2f(x0, y0) };
+	for (Vector2f spawnerPos : spawners) {
+		world->createEntity()
+			.addComponent(PositionComponent(pos + spawnerPos))
+			.addComponent(EnemySpawnerComponent(rng.getFloat(2.0f, 4.0f), id));
+	}
 }
 
 Vector2f GameStage::getRoomOffset(int i) const
@@ -111,15 +122,11 @@ void GameStage::createBackground()
 		createRoom(getRoomOffset(i), i);
 	}
 
-	auto& sheet = *getAPI().getResource<SpriteSheet>("trapped_scenery.json");
-	auto material = getAPI().getResource<MaterialDefinition>("sprite.yaml");
-
 	// Ouroboros
 	world->createEntity()
 		.addComponent(PositionComponent(Vector2f(700.0f, 752.0f)))
 		.addComponent(SpriteComponent(Sprite()
-			.setImage(sheet.getTexture(), material)
-			.setSprite(sheet, "Ouroboros.png")
+			.setSprite(getResources(), "trapped_scenery.json", "Ouroboros.png")
 			.setPivot(Vector2f(0.5f, 0.5f))
 			, -25));
 }

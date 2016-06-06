@@ -31,15 +31,11 @@ private:
 		float ttl = 0.4f;
 		int damage = 1;
 
-		auto& sheet = *getAPI().getResource<SpriteSheet>("trapped_sprites.json");
-		auto material = getAPI().getResource<MaterialDefinition>("sprite.yaml");
-
 		getWorld().createEntity()
 			.addComponent(PositionComponent(origin))
 			.addComponent(VelocityComponent(vel, Vector2f()))
 			.addComponent(SpriteComponent(Sprite()
-				.setImage(sheet.getTexture(), material)
-				.setSprite(sheet, "simple_bullet.png")
+				.setSprite(getAPI().core->getResources(), "trapped_sprites.json", "simple_bullet.png")
 				.setColour(Colour(1, 1, 0))
 				.setPivot(Vector2f(0.5f, 0.5f))
 				.setRotation(vel.angle()), 0))
