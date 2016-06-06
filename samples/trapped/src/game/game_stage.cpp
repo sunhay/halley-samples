@@ -12,6 +12,7 @@
 #include <components/gun_component.h>
 #include <components/collider_component.h>
 #include <components/health_component.h>
+#include <components/repulse_field_component.h>
 
 using namespace Halley;
 
@@ -71,7 +72,8 @@ void GameStage::createPlayer(Vector2f pos) {
 		.addComponent(PlayerComponent())
 		.addComponent(ShooterComponent(false, Vector2f(), 0))
 		.addComponent(GunComponent(0.1f, "machinegun"))
-		.addComponent(ColliderComponent(Rect4f(-13, -13, 26, 26), 0, false, false));
+		.addComponent(ColliderComponent(Rect4f(-13, -13, 26, 26), 0, false, false))
+		.addComponent(RepulseFieldComponent(10));
 }
 
 void GameStage::createEnemy(Vector2f pos)
@@ -84,7 +86,8 @@ void GameStage::createEnemy(Vector2f pos)
 		.addComponent(MobComponent(Vector2f(), Vector2f(), 30, 60))
 		.addComponent(EnemyComponent())
 		.addComponent(ColliderComponent(Rect4f(-18, -18, 36, 36), 1, false, false))
-		.addComponent(HealthComponent(5, 5));
+		.addComponent(HealthComponent(5, 5))
+		.addComponent(RepulseFieldComponent(5));
 }
 
 void GameStage::createObstacle(Vector2f pos, Vector2f size)

@@ -50,6 +50,12 @@ members:
 
 ---
 
+component: RepulseField
+members:
+  - multiplier: float
+
+---
+
 component: Enemy
 
 ---
@@ -155,6 +161,19 @@ families:
 
 ---
 
+system: Repulsion
+families:
+  - main:
+    - Position: read
+    - Velocity: write
+    - RepulseField: read
+    - Collider: read
+messages:
+  - Collision: receive
+access: ['world']
+
+---
+
 system: PlayerSeeking
 families:
   - main:
@@ -233,6 +252,7 @@ message: Collision
 members:
   - other: Halley::EntityId
   - otherLayer: int
+  - otherRect: 'Halley::Rect4f'
 
 ---
 

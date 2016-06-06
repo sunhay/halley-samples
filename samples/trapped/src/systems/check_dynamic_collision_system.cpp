@@ -16,7 +16,7 @@ public:
 			if (!o.collider->isStatic && o.entityId != e.entityId) {
 				auto rect = o.position->position + o.collider->rect;
 				if (myRect.overlaps(rect)) {
-					sendMessage(e.entityId, CollisionMessage(o.entityId, o.collider->layer));
+					sendMessage(e.entityId, CollisionMessage(o.entityId, o.collider->layer, o.collider->rect + o.position->position));
 				}
 			}
 		}

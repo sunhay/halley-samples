@@ -29,7 +29,7 @@ private:
 		Vector2f vel = dir * 500 + playerVel * 0.5f;
 		Vector2f origin = pos + Vector2f(0, 15) + vel * 0.016f;
 		float ttl = 0.4f;
-		float damage = 1;
+		int damage = 1;
 
 		auto& sheet = *getAPI().getResource<SpriteSheet>("trapped_sprites.json");
 		auto material = getAPI().getResource<MaterialDefinition>("sprite.yaml");

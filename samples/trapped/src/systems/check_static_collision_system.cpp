@@ -60,8 +60,7 @@ private:
 		float objPos = delta < 0 ? rect.getTopLeft()[coord] : rect.getBottomRight()[coord];
 		float closest = delta < 0 ? std::numeric_limits<float>::lowest() : std::numeric_limits<float>::max();
 		
-		EntityId obstacleEntity = -1;
-		int obstacleLayer = -1;
+		ObstaclesFamily* bestObstacle = nullptr;
 
 		// TODO: only check surrounding area, instead of all obstacles
 		for (auto& obstacle: obstaclesFamily) {
@@ -76,7 +75,7 @@ private:
 					if (myNormal.overlaps(obsNormal)) {
 						// We're inside the obstacle, oh shit.
 						// TODO: handle this better
-						onCollidedWith(myself, obstacle.entityId, obstacle.collider->layer);
+						onCollidedWith(myself, obstacle);
 						return 0;
 					}
 
@@ -84,8 +83,7 @@ private:
 					if ((delta < 0 && obsPos <= objPos && obsPos > closest) || (delta >= 0 && obsPos >= objPos && obsPos < closest)) {
 						// Hit this obstacle, and this is closer to any previous found ones
 						closest = obsPos;
-						obstacleEntity = obstacle.entityId;
-						obstacleLayer = obstacle.collider->layer;
+						bestObstacle = &obstacle;
 					}
 				}
 			}
@@ -97,14 +95,16 @@ private:
 			return delta;
 		} else {
 			// Hit something
-			onCollidedWith(myself, obstacleEntity, obstacleLayer);
+			if (bestObstacle) {
+				onCollidedWith(myself, *bestObstacle);
+			}
 			return deltaToImpact;
 		}
 	}
 
-	void onCollidedWith(EntityId dynamic, EntityId obstacle, int obstacleLayer)
+	void onCollidedWith(EntityId dynamic, const ObstaclesFamily& obstacle)
 	{
-		sendMessage(dynamic, CollisionMessage(obstacle, obstacleLayer));
+		sendMessage(dynamic, CollisionMessage(obstacle.entityId, obstacle.collider->layer, obstacle.collider->rect + obstacle.position->position));
 	}
 
 };
