@@ -13,7 +13,12 @@ public:
 
 private:
 	void createPlayer(Halley::Vector2f pos);
-	void createObstacle(Halley::Vector2f pos, Halley::Vector2f size);
+	void createObstacle(Halley::Rect4f rect);
+	void createRoom(Halley::Vector2f pos, int i);
+	void createBackground();
+	void createWalls();
+
+	Halley::Vector2f getRoomOffset(int i) const;
 
 	std::unique_ptr<Halley::World> world;
 	std::unique_ptr<Halley::WorldStatsView> statsView;

@@ -19,10 +19,10 @@ void GameStage::init()
 	world = createWorld("trapped_game_world.yaml", createSystem);
 	statsView = std::make_unique<WorldStatsView>(*getAPI().core, *world);
 
-	createPlayer(Vector2f(640, 360));
+	createPlayer(Vector2f(350, 350));
 
-	createObstacle(Vector2f(800, 360), Vector2f(100, 100));
-	createObstacle(Vector2f(900, 360), Vector2f(100, 400));
+	createBackground();
+	createWalls();
 }
 
 void GameStage::deInit()
@@ -72,9 +72,79 @@ void GameStage::createPlayer(Vector2f pos) {
 		.addComponent(RepulseFieldComponent(10));
 }
 
-void GameStage::createObstacle(Vector2f pos, Vector2f size)
+void GameStage::createObstacle(Rect4f rect)
 {
+	Vector2f size = rect.getSize();
 	world->createEntity()
-		.addComponent(PositionComponent(pos))
+		.addComponent(PositionComponent(rect.getCenter()))
 		.addComponent(ColliderComponent(Rect4f(-size/2, size/2), 1, false, true));
+}
+
+void GameStage::createRoom(Vector2f pos, int id)
+{
+	auto& sheet = *getAPI().getResource<SpriteSheet>("trapped_scenery.json");
+	auto material = getAPI().getResource<MaterialDefinition>("sprite.yaml");
+
+	world->createEntity()
+		.addComponent(PositionComponent(pos + Vector2f(350.0f, 350.0f)))
+		.addComponent(SpriteComponent(Sprite()
+			.setImage(sheet.getTexture(), material)
+			.setSprite(sheet, "BG_0" + String::integerToString(id + 1) + ".png")
+			.setPivot(Vector2f(0.5f, 0.5f))
+		, -20));
+}
+
+Vector2f GameStage::getRoomOffset(int i) const
+{
+	switch (i) {
+	case 0: return Vector2f(0, 0);
+	case 1: return Vector2f(700, 0);
+	case 2: return Vector2f(0, 700);
+	case 3: return Vector2f(700, 700);
+	}
+	return Vector2f();
+}
+
+void GameStage::createBackground()
+{
+	for (int i = 0; i<4; i++) {
+		createRoom(getRoomOffset(i), i);
+	}
+
+	auto& sheet = *getAPI().getResource<SpriteSheet>("trapped_scenery.json");
+	auto material = getAPI().getResource<MaterialDefinition>("sprite.yaml");
+
+	// Ouroboros
+	world->createEntity()
+		.addComponent(PositionComponent(Vector2f(700.0f, 752.0f)))
+		.addComponent(SpriteComponent(Sprite()
+			.setImage(sheet.getTexture(), material)
+			.setSprite(sheet, "Ouroboros.png")
+			.setPivot(Vector2f(0.5f, 0.5f))
+			, -25));
+}
+
+void GameStage::createWalls()
+{
+	Rect4f rects[] = {
+		Rect4f(0, 0, 1400, 12),
+		Rect4f(0, 0, 50, 1400),
+
+		Rect4f(0, 1290, 1400, 50),
+		Rect4f(1350, 0, 50, 1400),
+
+		Rect4f(650, 0, 100, 270),
+		Rect4f(650, 345, 100, 645),
+		Rect4f(650, 1050, 100, 352),
+
+		Rect4f(0, 560, 272, 130),
+		Rect4f(460, 560, 500, 130),
+		Rect4f(1145, 560, 270, 130)
+	};
+
+	for (auto& r : rects) {
+		// Rects are from Halley 1, which is upside-down... convert.
+		Rect4f r2(r.getLeft(), 1400 - r.getTop() - r.getHeight(), r.getWidth(), r.getHeight());
+		createObstacle(r2);
+	}
 }
