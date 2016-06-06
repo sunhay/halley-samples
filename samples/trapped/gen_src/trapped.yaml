@@ -133,6 +133,8 @@ families:
   - obstacles:
     - Position: read
     - Collider: read
+messages:
+  - Collision: send
 
 ---
 
