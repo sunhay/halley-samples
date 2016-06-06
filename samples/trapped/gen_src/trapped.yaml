@@ -9,6 +9,17 @@ members:
 component: Velocity
 members:
   - velocity: 'Halley::Vector2f'
+  - targetPosition: 'Halley::Vector2f'
+
+---
+
+component: Collider
+members:
+  - size: Halley::Vector2f
+  - offset: Halley::Vector2f
+  - layer: int
+  - trigger: bool
+  - isStatic: bool
 
 ---
 
@@ -86,14 +97,6 @@ members:
 
 ---
 
-component: Collider
-members:
-  - size: Halley::Vector2f
-  - offset: Halley::Vector2f
-  - layer: int
-
----
-
 
 
 system: PlayerInput
@@ -110,6 +113,26 @@ families:
   - main:
     - Mob: read
     - Velocity: write
+
+---
+
+system: IntegrateVelocity
+families:
+  - main:
+    - Position: read
+    - Velocity: write
+
+---
+
+system: CheckCollision
+families:
+  - main:
+    - Position: read
+    - Velocity: write
+    - Collider: read
+  - obstacles:
+    - Position: read
+    - Collider: read
 
 ---
 

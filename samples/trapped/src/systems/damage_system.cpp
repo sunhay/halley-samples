@@ -2,7 +2,7 @@
 
 class DamageSystem final : public DamageSystemBase<DamageSystem> {
 public:
-	void update(Halley::Time p, MainFamily& entity) {
+	void update(Halley::Time time, MainFamily& e) {
 		// TODO
 	}
 

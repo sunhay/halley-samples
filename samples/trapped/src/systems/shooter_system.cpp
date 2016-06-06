@@ -36,18 +36,18 @@ private:
 		auto material = getAPI().getResource<MaterialDefinition>("sprite.yaml");
 
 		getWorld().createEntity()
-			.addComponent(new PositionComponent(origin))
-			.addComponent(new VelocityComponent(vel))
-			.addComponent(new SpriteComponent(Sprite()
+			.addComponent(PositionComponent(origin))
+			.addComponent(VelocityComponent(vel, Vector2f()))
+			.addComponent(SpriteComponent(Sprite()
 				.setImage(sheet.getTexture(), material)
 				.setSprite(sheet, "simple_bullet.png")
 				.setColour(Colour(1, 1, 0))
 				.setPivot(Vector2f(0.5f, 0.5f))
 				.setRotation(vel.angle()), 0))
-			.addComponent(new BulletComponent(damage))
-			.addComponent(new TTLComponent(ttl))
-			.addComponent(new ColliderComponent(Vector2f(25, 25), Vector2f(), 2))
-			.addComponent(new DestroyOnImpactComponent());
+			.addComponent(BulletComponent(damage))
+			.addComponent(TTLComponent(ttl))
+			.addComponent(ColliderComponent(Vector2f(25, 25), Vector2f(), 2, false, false))
+			.addComponent(DestroyOnImpactComponent());
 	}
 };
 

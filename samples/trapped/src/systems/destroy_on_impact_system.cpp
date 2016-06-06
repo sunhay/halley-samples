@@ -2,7 +2,7 @@
 
 class DestroyOnImpactSystem final : public DestroyOnImpactSystemBase<DestroyOnImpactSystem> {
 public:
-	void update(Halley::Time p, MainFamily& entity) {
+	void update(Halley::Time time, MainFamily& e) {
 	}
 	
 	void onMessageReceived(const CollisionMessage& msg, MainFamily& entity) {

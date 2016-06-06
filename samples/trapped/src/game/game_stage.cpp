@@ -22,6 +22,8 @@ void GameStage::init()
 	createPlayer(Vector2f(640, 360));
 	createEnemy(Vector2f(240, 360));
 	createEnemy(Vector2f(640, 60));
+
+	createObstacle(Vector2f(800, 360), Vector2f(100, 100));
 }
 
 void GameStage::deInit()
@@ -58,26 +60,33 @@ void GameStage::createPlayer(Vector2f pos) {
 	input->bindAxisButton(3, keyboard, Keys::Up, Keys::Down);
 
 	world->createEntity()
-		.addComponent(new PositionComponent(pos))
-		.addComponent(new VelocityComponent(Vector2f(0, 0)))
-		.addComponent(new SpriteAnimationComponent(AnimationPlayer(getResource<Animation>("ella.yaml"))))
-		.addComponent(new SpriteComponent(Sprite(), 0))
-		.addComponent(new MobComponent(Vector2f(), Vector2f(), 50, 300))
-		.addComponent(new PlayerInputComponent(input))
-		.addComponent(new PlayerComponent())
-		.addComponent(new ShooterComponent(false, Vector2f(), 0))
-		.addComponent(new GunComponent(0.1f, "machinegun"))
-		.addComponent(new ColliderComponent(Vector2f(25, 25), Vector2f(), 0));
+		.addComponent(PositionComponent(pos))
+		.addComponent(VelocityComponent(Vector2f(0, 0), Vector2f()))
+		.addComponent(SpriteAnimationComponent(AnimationPlayer(getResource<Animation>("ella.yaml"))))
+		.addComponent(SpriteComponent(Sprite(), 0))
+		.addComponent(MobComponent(Vector2f(), Vector2f(), 50, 300))
+		.addComponent(PlayerInputComponent(input))
+		.addComponent(PlayerComponent())
+		.addComponent(ShooterComponent(false, Vector2f(), 0))
+		.addComponent(GunComponent(0.1f, "machinegun"))
+		.addComponent(ColliderComponent(Vector2f(25, 25), Vector2f(), 0, false, false));
 }
 
-void GameStage::createEnemy(Halley::Vector2f pos)
+void GameStage::createEnemy(Vector2f pos)
 {
 	world->createEntity()
-		.addComponent(new PositionComponent(pos))
-		.addComponent(new VelocityComponent(Vector2f(0, 0)))
-		.addComponent(new SpriteAnimationComponent(AnimationPlayer(getResource<Animation>("ella.yaml"))))
-		.addComponent(new SpriteComponent(Sprite(), 0))
-		.addComponent(new MobComponent(Vector2f(), Vector2f(), 30, 60))
-		.addComponent(new EnemyComponent())
-		.addComponent(new ColliderComponent(Vector2f(25, 25), Vector2f(), 1));
+		.addComponent(PositionComponent(pos))
+		.addComponent(VelocityComponent(Vector2f(0, 0), Vector2f()))
+		.addComponent(SpriteAnimationComponent(AnimationPlayer(getResource<Animation>("ella.yaml"))))
+		.addComponent(SpriteComponent(Sprite(), 0))
+		.addComponent(MobComponent(Vector2f(), Vector2f(), 30, 60))
+		.addComponent(EnemyComponent())
+		.addComponent(ColliderComponent(Vector2f(25, 25), Vector2f(), 1, false, false));
+}
+
+void GameStage::createObstacle(Vector2f pos, Vector2f size)
+{
+	world->createEntity()
+		.addComponent(PositionComponent(pos))
+		.addComponent(ColliderComponent(size, Vector2f(), 1, false, true));
 }
