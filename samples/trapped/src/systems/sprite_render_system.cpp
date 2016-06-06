@@ -6,14 +6,7 @@ class SpriteRenderSystem final : public SpriteRenderSystemBase<SpriteRenderSyste
 public:
 	void render(Painter& painter) const
 	{
-		Camera& cam = painter.getCurrentCamera();
-		Rect4i viewPort = painter.getViewPort();
-
-		static SpritePainter spritePainter;
-
-		Vector2f size = Vector2f(viewPort.getSize()) / cam.getZoom();
-		assert(cam.getAngle().getRadians() == 0); // Camera rotation not accounted by following line
-		Rect4f worldView(cam.getPosition() - size * 0.5f, size);
+		Rect4f worldView = getWorldView(painter);
 
 		spritePainter.start(mainFamily.count());
 		for (auto& e : mainFamily) {
@@ -23,9 +16,20 @@ public:
 				spritePainter.add(sprite, e.sprite->layer, int(sprite.getPosition().y - worldView.getY()));
 			}
 		}
-
 		spritePainter.draw(painter);
-		painter.flush();
+	}
+
+private:
+	mutable SpritePainter spritePainter;
+
+	Rect4f getWorldView(Painter& painter) const
+	{
+		Camera& cam = painter.getCurrentCamera();
+		Rect4i viewPort = painter.getViewPort();
+
+		Vector2f size = Vector2f(viewPort.getSize()) / cam.getZoom();
+		assert(cam.getAngle().getRadians() == 0); // Camera rotation not accounted by following line
+		return Rect4f(cam.getPosition() - size * 0.5f, size);
 	}
 };
 

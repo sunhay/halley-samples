@@ -19,7 +19,7 @@ public:
 			e.enemySpawner->cooldown = std::max(0.0f, e.enemySpawner->cooldown - float(time));
 		}
 
-		if (enemiesFamily.count() < 10) {
+		if (enemiesFamily.count() < 20) {
 			auto& rng = Random::getGlobal();
 
 			auto eligible = filterRef(mainFamily.begin(), mainFamily.end(), [](MainFamily e) -> bool { return e.enemySpawner->roomId == 0 && e.enemySpawner->cooldown == 0; });

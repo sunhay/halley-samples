@@ -40,24 +40,20 @@ public:
 private:
 	float moveHorizontal(EntityId myself, float delta, const Rect4f& rect)
 	{
-		return move(myself, delta, 0, rect);
+		return delta == 0 ? 0 : move(myself, delta, 0, rect);
 	}
 
 	float moveVertical(EntityId myself, float delta, const Rect4f& rect)
 	{
-		return move(myself, delta, 1, rect);
+		return delta == 0 ? 0 : move(myself, delta, 1, rect);
 	}
 
 	float move(EntityId myself, float delta, int coord, Rect4f rect)
 	{
-		if (delta == 0) {
-			return 0;
-		}
-
 		Range<float> myOrthogonal = rect.getRange(1 - coord);;
 		Range<float> myNormal = rect.getRange(coord);
 
-		float objPos = delta < 0 ? rect.getTopLeft()[coord] : rect.getBottomRight()[coord];
+		float myPos = delta < 0 ? rect.getTopLeft()[coord] : rect.getBottomRight()[coord];
 		float closest = delta < 0 ? std::numeric_limits<float>::lowest() : std::numeric_limits<float>::max();
 		
 		ObstaclesFamily* bestObstacle = nullptr;
@@ -80,7 +76,7 @@ private:
 					}
 
 					float obsPos = (delta > 0 ? colRect.getTopLeft() : colRect.getBottomRight())[coord];
-					if ((delta < 0 && obsPos <= objPos && obsPos > closest) || (delta >= 0 && obsPos >= objPos && obsPos < closest)) {
+					if ((delta < 0 && obsPos <= myPos && obsPos > closest) || (delta >= 0 && obsPos >= myPos && obsPos < closest)) {
 						// Hit this obstacle, and this is closer to any previous found ones
 						closest = obsPos;
 						bestObstacle = &obstacle;
@@ -88,7 +84,7 @@ private:
 				}
 			}
 		}
-		float deltaToImpact = closest - objPos;
+		float deltaToImpact = closest - myPos;
 
 		if (abs(delta) < abs(deltaToImpact)) {
 			// No obstacles hit
