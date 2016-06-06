@@ -15,8 +15,7 @@ members:
 
 component: Collider
 members:
-  - size: Halley::Vector2f
-  - offset: Halley::Vector2f
+  - rect: Halley::Rect4f
   - layer: int
   - trigger: bool
   - isStatic: bool
@@ -59,13 +58,9 @@ component: Player
 
 ---
 
-component: DestroyOnImpact
-
----
-
 component: Bullet
 members:
-  - damage: float
+  - damage: int
 
 ---
 
@@ -124,13 +119,27 @@ families:
 
 ---
 
-system: CheckCollision
+system: CheckStaticCollision
 families:
   - main:
     - Position: read
     - Velocity: write
     - Collider: read
   - obstacles:
+    - Position: read
+    - Collider: read
+messages:
+  - Collision: send
+
+---
+
+system: CheckDynamicCollision
+families:
+  - main:
+    - Position: read
+    - Velocity: write
+    - Collider: read
+  - targets:
     - Position: read
     - Collider: read
 messages:
@@ -182,17 +191,19 @@ families:
   - main:
     - Health: write
 messages:
-  - Collision: receive
+  - Damage: receive
+access: ['world']
 
 ---
 
-system: DestroyOnImpact
+system: Bullet
 access: ['world']
 families:
   - main:
-    - DestroyOnImpact: read
+    - Bullet: read
 messages:
   - Collision: receive
+  - Damage: send
 
 ---
 
@@ -222,5 +233,11 @@ message: Collision
 members:
   - other: Halley::EntityId
   - otherLayer: int
+
+---
+
+message: Damage
+members:
+  - amount: int
 
 ...

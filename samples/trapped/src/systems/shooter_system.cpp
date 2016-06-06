@@ -5,7 +5,6 @@
 #include <components/bullet_component.h>
 #include <components/ttl_component.h>
 #include <components/collider_component.h>
-#include <components/destroy_on_impact_component.h>
 
 using namespace Halley;
 
@@ -46,8 +45,7 @@ private:
 				.setRotation(vel.angle()), 0))
 			.addComponent(BulletComponent(damage))
 			.addComponent(TTLComponent(ttl))
-			.addComponent(ColliderComponent(Vector2f(25, 25), Vector2f(), 2, false, false))
-			.addComponent(DestroyOnImpactComponent());
+			.addComponent(ColliderComponent(Rect4f(-5, -5, 10, 10), 2, false, false));
 	}
 };
 

@@ -1,4 +1,5 @@
 #include <systems/player_seeking_system.h>
+#include <limits>
 
 using namespace Halley;
 
@@ -6,25 +7,18 @@ class PlayerSeekingSystem final : public PlayerSeekingSystemBase<PlayerSeekingSy
 public:
 	void update(Halley::Time, MainFamily& entity)
 	{
-		// Go through every player, and find the closest one
+		// Find the closest player
 		Vector2f myPos = entity.position->position;
-		Vector2f bestTarget = myPos;
-		float bestDistSqr = 2000 * 2000;
-		for (auto& p : playersFamily) {
-			Vector2f pos = p.position->position;
-			float distSqr = (pos - myPos).squaredLength();
-			if (distSqr < bestDistSqr) {
-				bestDistSqr = distSqr;
-				bestTarget = pos;
-			}
-		}
+		auto bestTarget = Halley::findLowestScore(playersFamily.begin(), playersFamily.end(), std::numeric_limits<float>::max(), [myPos](auto& p) {
+			return (p.position->position - myPos).squaredLength();
+		});
 
-		// Seek on that player
-		Vector2f target = bestTarget - myPos;
-		if (target.length() > 1) {
-			entity.mob->moveDir = entity.mob->faceDir = target.unit();
-		} else {
+		if (bestTarget == playersFamily.end()) {
+			// No players to seek
 			entity.mob->moveDir = Vector2f();
+		} else {
+			Vector2f target = bestTarget->position->position - myPos;
+			entity.mob->moveDir = entity.mob->faceDir = target.unit();
 		}
 	}
 };

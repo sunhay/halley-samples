@@ -1,4 +1,5 @@
 #include <systems/damage_system.h>
+#include <messages/damage_message.h>
 
 class DamageSystem final : public DamageSystemBase<DamageSystem> {
 public:
@@ -6,8 +7,14 @@ public:
 		// TODO
 	}
 
-	void onMessageReceived(const CollisionMessage& msg, MainFamily& entity) {
-		// TODO
+	void onMessageReceived(const DamageMessage& msg, MainFamily& entity) {
+		int& health = entity.health->current;
+		health -= msg.amount;
+
+		if (health <= 0) {
+			health = 0;
+			getWorld().destroyEntity(entity.entityId);
+		}
 	}
 };
 

@@ -11,6 +11,7 @@
 #include <components/shooter_component.h>
 #include <components/gun_component.h>
 #include <components/collider_component.h>
+#include <components/health_component.h>
 
 using namespace Halley;
 
@@ -24,6 +25,7 @@ void GameStage::init()
 	createEnemy(Vector2f(640, 60));
 
 	createObstacle(Vector2f(800, 360), Vector2f(100, 100));
+	createObstacle(Vector2f(900, 360), Vector2f(100, 400));
 }
 
 void GameStage::deInit()
@@ -69,7 +71,7 @@ void GameStage::createPlayer(Vector2f pos) {
 		.addComponent(PlayerComponent())
 		.addComponent(ShooterComponent(false, Vector2f(), 0))
 		.addComponent(GunComponent(0.1f, "machinegun"))
-		.addComponent(ColliderComponent(Vector2f(25, 25), Vector2f(), 0, false, false));
+		.addComponent(ColliderComponent(Rect4f(-13, -13, 26, 26), 0, false, false));
 }
 
 void GameStage::createEnemy(Vector2f pos)
@@ -81,12 +83,13 @@ void GameStage::createEnemy(Vector2f pos)
 		.addComponent(SpriteComponent(Sprite(), 0))
 		.addComponent(MobComponent(Vector2f(), Vector2f(), 30, 60))
 		.addComponent(EnemyComponent())
-		.addComponent(ColliderComponent(Vector2f(25, 25), Vector2f(), 1, false, false));
+		.addComponent(ColliderComponent(Rect4f(-18, -18, 36, 36), 1, false, false))
+		.addComponent(HealthComponent(5, 5));
 }
 
 void GameStage::createObstacle(Vector2f pos, Vector2f size)
 {
 	world->createEntity()
 		.addComponent(PositionComponent(pos))
-		.addComponent(ColliderComponent(size, Vector2f(), 1, false, true));
+		.addComponent(ColliderComponent(Rect4f(-size/2, size/2), 1, false, true));
 }
