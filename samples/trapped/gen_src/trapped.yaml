@@ -226,6 +226,15 @@ messages:
 
 ---
 
+system: EnemySpawning
+families:
+  - main:
+    - Enemy: read
+access: ['world', 'api']
+strategy: 'global'
+
+---
+
 system: SpriteAnimation
 families:
   - main:

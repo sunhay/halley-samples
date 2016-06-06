@@ -6,12 +6,10 @@
 #include <components/sprite_animation_component.h>
 #include <components/mob_component.h>
 #include <components/player_input_component.h>
-#include <components/enemy_component.h>
 #include <components/player_component.h>
 #include <components/shooter_component.h>
 #include <components/gun_component.h>
 #include <components/collider_component.h>
-#include <components/health_component.h>
 #include <components/repulse_field_component.h>
 
 using namespace Halley;
@@ -22,8 +20,6 @@ void GameStage::init()
 	statsView = std::make_unique<WorldStatsView>(*getAPI().core, *world);
 
 	createPlayer(Vector2f(640, 360));
-	createEnemy(Vector2f(240, 360));
-	createEnemy(Vector2f(640, 60));
 
 	createObstacle(Vector2f(800, 360), Vector2f(100, 100));
 	createObstacle(Vector2f(900, 360), Vector2f(100, 400));
@@ -74,20 +70,6 @@ void GameStage::createPlayer(Vector2f pos) {
 		.addComponent(GunComponent(0.1f, "machinegun"))
 		.addComponent(ColliderComponent(Rect4f(-13, -13, 26, 26), 0, false, false))
 		.addComponent(RepulseFieldComponent(10));
-}
-
-void GameStage::createEnemy(Vector2f pos)
-{
-	world->createEntity()
-		.addComponent(PositionComponent(pos))
-		.addComponent(VelocityComponent(Vector2f(0, 0), Vector2f()))
-		.addComponent(SpriteAnimationComponent(AnimationPlayer(getResource<Animation>("ella.yaml"))))
-		.addComponent(SpriteComponent(Sprite(), 0))
-		.addComponent(MobComponent(Vector2f(), Vector2f(), 30, 60))
-		.addComponent(EnemyComponent())
-		.addComponent(ColliderComponent(Rect4f(-18, -18, 36, 36), 1, false, false))
-		.addComponent(HealthComponent(5, 5))
-		.addComponent(RepulseFieldComponent(5));
 }
 
 void GameStage::createObstacle(Vector2f pos, Vector2f size)

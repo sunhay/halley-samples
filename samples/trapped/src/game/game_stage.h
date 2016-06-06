@@ -13,7 +13,6 @@ public:
 
 private:
 	void createPlayer(Halley::Vector2f pos);
-	void createEnemy(Halley::Vector2f pos);
 	void createObstacle(Halley::Vector2f pos, Halley::Vector2f size);
 
 	std::unique_ptr<Halley::World> world;
