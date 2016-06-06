@@ -48,6 +48,10 @@ component: Player
 
 ---
 
+component: DestroyOnImpact
+
+---
+
 component: Bullet
 members:
   - damage: float
@@ -79,6 +83,14 @@ component: Health
 members:
   - max: int
   - current: int
+
+---
+
+component: Collider
+members:
+  - size: Halley::Vector2f
+  - offset: Halley::Vector2f
+  - layer: int
 
 ---
 
@@ -144,6 +156,18 @@ system: Damage
 families:
   - main:
     - Health: write
+messages:
+  - Collision: receive
+
+---
+
+system: DestroyOnImpact
+access: ['world']
+families:
+  - main:
+    - DestroyOnImpact: read
+messages:
+  - Collision: receive
 
 ---
 
@@ -163,5 +187,15 @@ families:
     - Sprite: write
 method: render
 strategy: global
+
+
+
+---
+
+
+message: Collision
+members:
+  - other: Halley::EntityId
+  - otherLayer: int
 
 ...

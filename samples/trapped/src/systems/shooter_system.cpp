@@ -4,6 +4,8 @@
 #include <components/sprite_component.h>
 #include <components/bullet_component.h>
 #include <components/ttl_component.h>
+#include <components/collider_component.h>
+#include <components/destroy_on_impact_component.h>
 
 using namespace Halley;
 
@@ -43,7 +45,9 @@ private:
 				.setPivot(Vector2f(0.5f, 0.5f))
 				.setRotation(vel.angle()), 0))
 			.addComponent(new BulletComponent(damage))
-			.addComponent(new TTLComponent(ttl));
+			.addComponent(new TTLComponent(ttl))
+			.addComponent(new ColliderComponent(Vector2f(25, 25), Vector2f(), 2))
+			.addComponent(new DestroyOnImpactComponent());
 	}
 };
 

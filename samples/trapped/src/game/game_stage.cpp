@@ -10,6 +10,7 @@
 #include <components/player_component.h>
 #include <components/shooter_component.h>
 #include <components/gun_component.h>
+#include <components/collider_component.h>
 
 using namespace Halley;
 
@@ -65,7 +66,8 @@ void GameStage::createPlayer(Vector2f pos) {
 		.addComponent(new PlayerInputComponent(input))
 		.addComponent(new PlayerComponent())
 		.addComponent(new ShooterComponent(false, Vector2f(), 0))
-		.addComponent(new GunComponent(0.1f, "machinegun"));
+		.addComponent(new GunComponent(0.1f, "machinegun"))
+		.addComponent(new ColliderComponent(Vector2f(25, 25), Vector2f(), 0));
 }
 
 void GameStage::createEnemy(Halley::Vector2f pos)
@@ -76,5 +78,6 @@ void GameStage::createEnemy(Halley::Vector2f pos)
 		.addComponent(new SpriteAnimationComponent(AnimationPlayer(getResource<Animation>("ella.yaml"))))
 		.addComponent(new SpriteComponent(Sprite(), 0))
 		.addComponent(new MobComponent(Vector2f(), Vector2f(), 30, 60))
-		.addComponent(new EnemyComponent());
+		.addComponent(new EnemyComponent())
+		.addComponent(new ColliderComponent(Vector2f(25, 25), Vector2f(), 1));
 }
