@@ -13,7 +13,7 @@ public:
 			return;
 		}
 
-		auto myRect = entity.collider->rect + entity.position->position;
+		auto myRect = entity.collider.rect + entity.position.position;
 		auto theirRect = msg.otherRect;
 
 		// Find the bounce-out direction
@@ -35,8 +35,8 @@ public:
 
 		// Compute speed and bounce
 		float overlapDist = axes.dot(overlap) + 2;
-		float speed = overlapDist * entity.repulseField->multiplier;
-		entity.velocity->velocity += dir * speed;
+		float speed = overlapDist * entity.repulseField.multiplier;
+		entity.velocity.velocity += dir * speed;
 	}
 };
 

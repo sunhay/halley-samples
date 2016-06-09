@@ -12,7 +12,7 @@ public:
 
 		// Hit enemy
 		if (msg.otherLayer == 1) {
-			sendMessage(msg.other, DamageMessage(entity.bullet->damage));
+			sendMessage(msg.other, DamageMessage(entity.bullet.damage));
 		}
 	}
 };

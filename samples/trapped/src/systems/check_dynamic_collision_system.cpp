@@ -6,17 +6,17 @@ public:
 		// TODO: make this more efficient
 
 		// Skip static objects
-		if (e.collider->isStatic) {
+		if (e.collider.isStatic) {
 			return;
 		}
 
-		auto myRect = e.position->position + e.collider->rect;
+		auto myRect = e.position.position + e.collider.rect;
 		for (auto& o : targetsFamily) {
 			// Don't check against static objects, or against myself
-			if (!o.collider->isStatic && o.entityId != e.entityId) {
-				auto rect = o.position->position + o.collider->rect;
+			if (!o.collider.isStatic && o.entityId != e.entityId) {
+				auto rect = o.position.position + o.collider.rect;
 				if (myRect.overlaps(rect)) {
-					sendMessage(e.entityId, CollisionMessage(o.entityId, o.collider->layer, rect));
+					sendMessage(e.entityId, CollisionMessage(o.entityId, o.collider.layer, rect));
 				}
 			}
 		}

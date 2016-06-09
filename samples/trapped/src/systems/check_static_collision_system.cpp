@@ -8,9 +8,9 @@ public:
 	void update(Time t, MainFamily& e)
 	{
 		EntityId myself = e.entityId;
-		Vector2f startPos = e.position->position;
-		Vector2f& endPos = e.velocity->targetPosition;
-		Rect4f rect = e.position->position + e.collider->rect;
+		Vector2f startPos = e.position.position;
+		Vector2f& endPos = e.velocity.targetPosition;
+		Rect4f rect = e.position.position + e.collider.rect;
 
 		// This is how much this entity wants to move
 		const Vector2f desiredDelta = endPos - startPos;
@@ -29,10 +29,10 @@ public:
 		// If we hit an obstacle, update our velocity to reflect that
 		if (t > 0.0001) {
 			if (delta.x != desiredDelta.x) {
-				e.velocity->velocity.x = delta.x / float(t);
+				e.velocity.velocity.x = delta.x / float(t);
 			}
 			if (delta.y != desiredDelta.y) {
-				e.velocity->velocity.y = delta.y / float(t);
+				e.velocity.velocity.y = delta.y / float(t);
 			}
 		}
 	}
@@ -60,8 +60,8 @@ private:
 
 		// TODO: only check surrounding area, instead of all obstacles
 		for (auto& obstacle: obstaclesFamily) {
-			if (obstacle.collider->isStatic) {
-				auto colRect = obstacle.collider->rect + obstacle.position->position;
+			if (obstacle.collider.isStatic) {
+				auto colRect = obstacle.collider.rect + obstacle.position.position;
 
 				// First check if there's an orthogonal overlap. If not, no matter how much I move along this axis, I can never collide with this obstacle.
 				auto obsOrthogonal = colRect.getRange(1 - coord);
@@ -100,7 +100,7 @@ private:
 
 	void onCollidedWith(EntityId dynamic, const ObstaclesFamily& obstacle)
 	{
-		sendMessage(dynamic, CollisionMessage(obstacle.entityId, obstacle.collider->layer, obstacle.collider->rect + obstacle.position->position));
+		sendMessage(dynamic, CollisionMessage(obstacle.entityId, obstacle.collider.layer, obstacle.collider.rect + obstacle.position.position));
 	}
 
 };

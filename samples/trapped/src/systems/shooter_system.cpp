@@ -12,14 +12,14 @@ class ShooterSystem final : public ShooterSystemBase<ShooterSystem> {
 public:
 	void update(Time p, MainFamily& e)
     {
-		float& cooldown = e.shooter->cooldown;
+		float& cooldown = e.shooter.cooldown;
 		if (cooldown > 0) {
 			cooldown = std::max(cooldown - float(p), 0.0f);
 		}
 
-        if (e.shooter->shooting && cooldown < 0.01f) {
-			cooldown = e.gun->cooldown;
-			spawnBullet(e.gun->type, e.position->position, e.shooter->shootDir, e.velocity->velocity);
+        if (e.shooter.shooting && cooldown < 0.01f) {
+			cooldown = e.gun.cooldown;
+			spawnBullet(e.gun.type, e.position.position, e.shooter.shootDir, e.velocity.velocity);
         }
     }
 

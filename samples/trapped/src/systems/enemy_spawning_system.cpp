@@ -16,18 +16,18 @@ class EnemySpawningSystem final : public EnemySpawningSystemBase<EnemySpawningSy
 public:
 	void update(Time time) {
 		for (auto& e : mainFamily) {
-			e.enemySpawner->cooldown = std::max(0.0f, e.enemySpawner->cooldown - float(time));
+			e.enemySpawner.cooldown = std::max(0.0f, e.enemySpawner.cooldown - float(time));
 		}
 
 		if (enemiesFamily.count() < 20) {
 			auto& rng = Random::getGlobal();
 
-			auto eligible = filterRef(mainFamily.begin(), mainFamily.end(), [](MainFamily e) -> bool { return e.enemySpawner->roomId == 0 && e.enemySpawner->cooldown == 0; });
+			auto eligible = filterRef(mainFamily.begin(), mainFamily.end(), [](MainFamily e) -> bool { return e.enemySpawner.roomId == 0 && e.enemySpawner.cooldown == 0; });
 			if (eligible.size() > 0) {
 				auto choice = pickRandom(eligible.begin(), eligible.end(), rng).get();
 
-				createEnemy(choice.position->position);
-				choice.enemySpawner->cooldown = rng.getFloat(2.0f, 5.0f);
+				createEnemy(choice.position.position);
+				choice.enemySpawner.cooldown = rng.getFloat(2.0f, 5.0f);
 			}
 		}
 	}

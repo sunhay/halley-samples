@@ -4,7 +4,7 @@ class MovementSystem final : public MovementSystemBase<MovementSystem> {
 public:
 	void update(Halley::Time time, MainFamily& e)
 	{
-		e.position->position = e.velocity->targetPosition;
+		e.position.position = e.velocity.targetPosition;
 	}
 };
 

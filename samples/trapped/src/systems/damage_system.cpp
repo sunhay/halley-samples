@@ -8,7 +8,7 @@ public:
 	}
 
 	void onMessageReceived(const DamageMessage& msg, MainFamily& entity) {
-		int& health = entity.health->current;
+		int& health = entity.health.current;
 		health -= msg.amount;
 
 		if (health <= 0) {
