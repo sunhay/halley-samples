@@ -28,21 +28,6 @@ public:
 		locator.addFileSystem(dataPath);
 	}
 
-	std::unique_ptr<Stage> makeStage(StageID id) override
-	{
-		switch (id) {
-		case Stages::Game:
-			return std::make_unique<GameStage>();
-		default:
-			return std::unique_ptr<Stage>();
-		}
-	}
-
-	StageID getInitialStage() const override
-	{
-		return Stages::Game;
-	}
-
 	String getName() const override
 	{
 		return "Trapped: In The Chambers of Eternal Darkness";
@@ -58,9 +43,10 @@ public:
 		return true;
 	}
 
-	void init(HalleyAPI* api) override
+	std::unique_ptr<Stage> startGame(HalleyAPI* api) override
 	{
-		api->video->setWindow(Window(WindowType::Window, Vector2i(1280, 720), getName(), false));
+		api->video->setWindow(Window(WindowType::Window, Vector2i(), Vector2i(1280, 720), getName()), true);
+		return std::make_unique<GameStage>();
 	}
 };
 
