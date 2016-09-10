@@ -2,6 +2,8 @@ cmake_minimum_required (VERSION 3.0)
 
 project (trapped)
 
+set (HOTRELOAD 1)
+
 set (trapped_sources
 	"prec.cpp"
 
