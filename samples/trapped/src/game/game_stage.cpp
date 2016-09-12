@@ -62,7 +62,7 @@ void GameStage::createPlayer(Vector2f pos) {
 	world->createEntity()
 		.addComponent(PositionComponent(pos))
 		.addComponent(VelocityComponent(Vector2f(0, 0), Vector2f()))
-		.addComponent(SpriteAnimationComponent(AnimationPlayer(getResource<Animation>("ella.yaml"))))
+		.addComponent(SpriteAnimationComponent(AnimationPlayer(getResource<Animation>("ella"))))
 		.addComponent(SpriteComponent(Sprite(), 0))
 		.addComponent(MobComponent(Vector2f(), Vector2f(), 50, 300))
 		.addComponent(PlayerInputComponent(input))

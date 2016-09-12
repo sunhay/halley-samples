@@ -38,7 +38,7 @@ private:
 		getWorld().createEntity()
 			.addComponent(PositionComponent(pos))
 			.addComponent(VelocityComponent(Vector2f(0, 0), Vector2f()))
-			.addComponent(SpriteAnimationComponent(AnimationPlayer(getAPI().getResource<Animation>("zombies.yaml"), "zombie" + String::integerToString(Random::getGlobal().get(1, 5)))))
+			.addComponent(SpriteAnimationComponent(AnimationPlayer(getAPI().getResource<Animation>("zombies"), "zombie" + String::integerToString(Random::getGlobal().get(1, 5)))))
 			.addComponent(SpriteComponent(Sprite(), 0))
 			.addComponent(MobComponent(Vector2f(), Vector2f(), 30, 60))
 			.addComponent(EnemyComponent())

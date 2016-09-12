@@ -1,7 +1,7 @@
 ---
 name: "Zombies"
 spriteSheet: "trapped_sprites.json"
-shader: "sprite.yaml"
+material: "sprite.yaml"
 sequences:
   - name: "zombie1"
     fps: 12
