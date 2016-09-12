@@ -17,7 +17,7 @@ using namespace Halley;
 
 void GameStage::init()
 {
-	world = createWorld("trapped_game_world.yaml", createSystem);
+	world = createWorld("trapped_game_world", createSystem);
 	statsView = std::make_unique<WorldStatsView>(*getAPI().core, *world);
 
 	createPlayer(Vector2f(350, 350));
