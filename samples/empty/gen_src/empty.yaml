@@ -1,0 +1,7 @@
+---
+
+component: Position
+members:
+  - position: 'Halley::Vector2f'
+
+---

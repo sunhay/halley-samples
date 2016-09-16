@@ -86,7 +86,7 @@ void GameStage::createRoom(Vector2f pos, int id)
 	world->createEntity()
 		.addComponent(PositionComponent(pos + Vector2f(350.0f, 350.0f)))
 		.addComponent(SpriteComponent(Sprite()
-			.setSprite(getResources(), "trapped_scenery.json", "BG_0" + String::integerToString(id + 1) + ".png")
+			.setSprite(getResources(), "trapped_scenery.json", "BG_0" + toString(id + 1) + ".png")
 			.setPivot(Vector2f(0.5f, 0.5f))
 		, -20));
 
