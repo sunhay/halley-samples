@@ -13,6 +13,8 @@ public:
 		// Hit enemy
 		if (msg.otherLayer == 1) {
 			sendMessage(msg.other, DamageMessage(entity.bullet.damage));
+			auto clip = getAPI().getResource<Halley::AudioClip>("sound/hit.ogg");
+			getAPI().audio->playWorld(clip, entity.position.position);
 		}
 	}
 };

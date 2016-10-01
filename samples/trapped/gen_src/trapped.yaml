@@ -233,13 +233,14 @@ access: ['world']
 ---
 
 system: Bullet
-access: ['world']
 families:
   - main:
     - Bullet: read
+    - Position: read
 messages:
   - Collision: receive
   - Damage: send
+access: ['world', 'api']
 
 ---
 
