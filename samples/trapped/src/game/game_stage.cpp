@@ -24,6 +24,9 @@ void GameStage::init()
 
 	createBackground();
 	createWalls();
+
+	getAudioAPI().startPlayback();
+	getAudioAPI().playUI(getResource<AudioClip>("music/talbot.ogg"), 1, 0.5f, true);
 }
 
 void GameStage::deInit()
@@ -38,9 +41,12 @@ void GameStage::onFixedUpdate(Time t)
 
 void GameStage::onRender(RenderContext& context) const
 {
-	context.bind([&] (Painter& painter)
+	Vector2f playerPos = world->getEntity(playerId).getComponent<PositionComponent>()->position;
+	Camera cam(playerPos, Vector2f(1280, 720));
+
+	context.with(cam).bind([&] (Painter& painter)
 	{
-		painter.clear(Colour(0.7f, 0.7f, 0.7f));
+		painter.clear(Colour(0, 0, 0));
 		world->render(painter);
 	});
 
@@ -59,7 +65,7 @@ void GameStage::createPlayer(Vector2f pos) {
 	input->bindAxisButton(2, keyboard, Keys::Left, Keys::Right);
 	input->bindAxisButton(3, keyboard, Keys::Up, Keys::Down);
 
-	world->createEntity()
+	auto pl = world->createEntity()
 		.addComponent(PositionComponent(pos))
 		.addComponent(VelocityComponent(Vector2f(0, 0), Vector2f()))
 		.addComponent(SpriteAnimationComponent(AnimationPlayer(getResource<Animation>("ella"))))
@@ -71,6 +77,8 @@ void GameStage::createPlayer(Vector2f pos) {
 		.addComponent(GunComponent(0.1f, "machinegun"))
 		.addComponent(ColliderComponent(Rect4f(-13, -13, 26, 26), 0, false, false))
 		.addComponent(RepulseFieldComponent(10));
+
+	playerId = pl.getEntityId();
 }
 
 void GameStage::createObstacle(Rect4f rect)

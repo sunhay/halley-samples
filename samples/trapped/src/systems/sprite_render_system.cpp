@@ -29,7 +29,7 @@ private:
 
 		Vector2f size = Vector2f(viewPort.getSize()) / cam.getZoom();
 		assert(cam.getAngle().getRadians() == 0); // Camera rotation not accounted by following line
-		return Rect4f(cam.getPosition() - size * 0.5f, size);
+		return Rect4f(cam.getPosition() - size * 0.5f, size.x, size.y);
 	}
 };
 

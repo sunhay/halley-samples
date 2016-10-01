@@ -17,6 +17,7 @@ timelines:
     - Shooter
     - Bullet
     - Damage
+    - EnemyDeath
     - TTL
     - EnemySpawning
     

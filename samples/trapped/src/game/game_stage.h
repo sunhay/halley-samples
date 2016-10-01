@@ -22,5 +22,6 @@ private:
 
 	std::unique_ptr<Halley::World> world;
 	std::unique_ptr<Halley::WorldStatsView> statsView;
+	Halley::EntityId playerId;
 };
 

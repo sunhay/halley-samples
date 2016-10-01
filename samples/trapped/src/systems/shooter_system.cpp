@@ -42,6 +42,9 @@ private:
 			.addComponent(BulletComponent(damage))
 			.addComponent(TTLComponent(ttl))
 			.addComponent(ColliderComponent(Rect4f(-5, -5, 10, 10), 2, false, false));
+
+		auto clip = getAPI().getResource<AudioClip>("sound/weak_shot.ogg");
+		getAPI().audio->playWorld(clip, origin);
 	}
 };
 

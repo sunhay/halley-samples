@@ -218,6 +218,7 @@ families:
     - Health: write
 messages:
   - Damage: receive
+  - Death: send
 access: ['world']
 
 ---
@@ -242,6 +243,17 @@ families:
     - Enemy: read
 access: ['world', 'api']
 strategy: 'global'
+
+---
+
+system: EnemyDeath
+families:
+  - main:
+    - Enemy: read
+    - Position: read
+messages:
+  - Death: receive
+access: ['api']
 
 ---
 
@@ -278,5 +290,9 @@ members:
 message: Damage
 members:
   - amount: int
+
+---
+
+message: Death
 
 ...

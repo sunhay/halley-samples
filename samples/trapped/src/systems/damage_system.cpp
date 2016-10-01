@@ -12,6 +12,7 @@ public:
 		health -= msg.amount;
 
 		if (health <= 0) {
+			sendMessage(entity.entityId, DeathMessage());
 			health = 0;
 			getWorld().destroyEntity(entity.entityId);
 		}
