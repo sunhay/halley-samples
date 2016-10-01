@@ -105,6 +105,15 @@ members:
 
 ---
 
+component: Flashing
+members:
+  - active: bool
+  - totalTime: float
+  - curTime: float
+  - colour: 'Halley::Colour'
+
+---
+
 
 
 system: PlayerInput
@@ -254,6 +263,16 @@ families:
 messages:
   - Death: receive
 access: ['api']
+
+---
+
+system: Flashing
+families:
+  - main:
+    - Flashing: write
+    - Sprite: write
+messages:
+  - Damage: receive
 
 ---
 

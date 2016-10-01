@@ -25,6 +25,7 @@ void GameStage::init()
 	createBackground();
 	createWalls();
 
+	auto devices = getAudioAPI().getAudioDevices();
 	getAudioAPI().startPlayback();
 	getAudioAPI().playUI(getResource<AudioClip>("music/talbot.ogg"), 1, 0.5f, true);
 }

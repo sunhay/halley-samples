@@ -22,6 +22,7 @@ timelines:
     - EnemySpawning
     
     # Pre-render phase:
+    - Flashing
     - SpriteAnimation
   render:
     - SpriteRender

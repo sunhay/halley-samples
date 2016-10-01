@@ -9,6 +9,7 @@
 #include <components/collider_component.h>
 #include <components/health_component.h>
 #include <components/repulse_field_component.h>
+#include "components/flashing_component.h"
 
 using namespace Halley;
 
@@ -43,8 +44,9 @@ private:
 			.addComponent(MobComponent(Vector2f(), Vector2f(), 30, 60))
 			.addComponent(EnemyComponent())
 			.addComponent(ColliderComponent(Rect4f(-18, -18, 36, 36), 1, false, false))
-			.addComponent(HealthComponent(2, 2))
-			.addComponent(RepulseFieldComponent(5));
+			.addComponent(HealthComponent(3, 3))
+			.addComponent(RepulseFieldComponent(5))
+			.addComponent(FlashingComponent(false, 0, 0, Colour4f()));
 	}
 };
 
