@@ -14,7 +14,7 @@ public:
 		if (msg.otherLayer == 1) {
 			sendMessage(msg.other, DamageMessage(entity.bullet.damage));
 			auto clip = getAPI().getResource<Halley::AudioClip>("sound/hit.ogg");
-			getAPI().audio->playWorld(clip, entity.position.position);
+			getAPI().audio->play(clip, Halley::AudioSourcePosition::makePositional(entity.position.position));
 		}
 	}
 };

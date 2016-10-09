@@ -8,7 +8,7 @@ public:
 	
 	void onMessageReceived(const DeathMessage& msg, MainFamily& entity) {
 		String clip = Random::getGlobal().getInt(0, 1) == 0 ? "sound/kill1.ogg" : "sound/kill2.ogg";
-		getAPI().audio->playWorld(getAPI().getResource<AudioClip>(clip), entity.position.position);
+		getAPI().audio->play(getAPI().getResource<AudioClip>(clip), AudioSourcePosition::makePositional(entity.position.position));
 	}
 };
 

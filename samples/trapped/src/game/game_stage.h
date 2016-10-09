@@ -8,6 +8,7 @@ public:
 	void init() override;
 	void deInit() override;
 
+	void onVariableUpdate(Halley::Time) override;
 	void onFixedUpdate(Halley::Time) override;
 	void onRender(Halley::RenderContext&) const override;
 

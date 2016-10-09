@@ -27,12 +27,22 @@ void GameStage::init()
 
 	auto devices = getAudioAPI().getAudioDevices();
 	getAudioAPI().startPlayback();
-	getAudioAPI().playUI(getResource<AudioClip>("music/talbot.ogg"), 1, 0.5f, true);
+	getAudioAPI().playMusic(getResource<AudioClip>("music/talbot.ogg"), 0, 2.0f);
 }
 
 void GameStage::deInit()
 {
 
+}
+
+void GameStage::onVariableUpdate(Halley::Time t)
+{
+	world->step(TimeLine::VariableUpdate, t);
+
+	if (getInputAPI().getKeyboard()->isButtonPressed(Keys::Z)) {
+		getAudioAPI().stopAllMusic(1.0f);
+		getAudioAPI().playMusic(getResource<AudioClip>("music/transi.ogg"), 0, 1.0f);
+	}
 }
 
 void GameStage::onFixedUpdate(Time t)
@@ -43,6 +53,7 @@ void GameStage::onFixedUpdate(Time t)
 void GameStage::onRender(RenderContext& context) const
 {
 	Vector2f playerPos = world->getEntity(playerId).getComponent<PositionComponent>()->position;
+	getAudioAPI().setListener(AudioListenerData(Vector3f(playerPos)));
 	Camera cam(playerPos, Vector2f(1280, 720));
 
 	context.with(cam).bind([&] (Painter& painter)

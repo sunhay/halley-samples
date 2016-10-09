@@ -21,9 +21,11 @@ timelines:
     - TTL
     - EnemySpawning
     
+  variableUpdate:
     # Pre-render phase:
     - Flashing
     - SpriteAnimation
+    
   render:
     - SpriteRender
 ...
