@@ -1,4 +1,5 @@
 #include <systems/repulsion_system.h>
+#include <cmath>
 
 using namespace Halley;
 
@@ -31,7 +32,7 @@ public:
 		Vector2f overlap;
 		overlap.x = myRect.getHorizontal().getOverlap(theirRect.getHorizontal()).getLength();
 		overlap.y = myRect.getVertical().getOverlap(theirRect.getVertical()).getLength();
-		Vector2f axes(abs(dir.x), abs(dir.y));
+		Vector2f axes(std::abs(dir.x), std::abs(dir.y));
 
 		// Compute speed and bounce
 		float overlapDist = axes.dot(overlap) + 2;

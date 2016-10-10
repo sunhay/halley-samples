@@ -1,5 +1,6 @@
 #include <systems/check_static_collision_system.h>
 #include <limits>
+#include <cmath>
 
 using namespace Halley;
 
@@ -86,7 +87,7 @@ private:
 		}
 		float deltaToImpact = closest - myPos;
 
-		if (abs(delta) < abs(deltaToImpact)) {
+		if (std::abs(delta) < std::abs(deltaToImpact)) {
 			// No obstacles hit
 			return delta;
 		} else {
