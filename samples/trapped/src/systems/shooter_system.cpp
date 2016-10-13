@@ -35,7 +35,7 @@ private:
 			.addComponent(PositionComponent(origin))
 			.addComponent(VelocityComponent(vel, Vector2f()))
 			.addComponent(SpriteComponent(Sprite()
-				.setSprite(getAPI().core->getResources(), "trapped_sprites.json", "simple_bullet.png")
+				.setSprite(getAPI().core->getResources(), "trapped_sprites", "simple_bullet.png")
 				.setColour(Colour(1, 1, 0))
 				.setPivot(Vector2f(0.5f, 0.5f))
 				.setRotation(vel.angle()), 0))

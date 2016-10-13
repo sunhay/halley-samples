@@ -1,6 +1,6 @@
 ---
 name: "Zombies"
-spriteSheet: "trapped_sprites.json"
+spriteSheet: "trapped_sprites"
 material: "sprite"
 sequences:
   - name: "zombie1"
