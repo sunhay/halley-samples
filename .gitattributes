@@ -1,1 +1,1 @@
-samples linguist-vendored=false
+samples/* linguist-vendored=false
